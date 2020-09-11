@@ -31,4 +31,14 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def __repr__(self):
-        return f"Posts('{self.title}', '{self.date_posted}')"
+        return f"Post('{self.title}', '{self.date_posted}')"
+
+class DataEntry(db.Model):
+    __tablename__ = 'budgetData'
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date)
+    asset1 = db.Column(db.Float(precision=2), nullable=False)
+    asset2 = db.Column(db.Float(precision=2), nullable=False)
+
+    def __repr__(self):
+        return f"DatEntry('{self.id}', '{self.date}')"

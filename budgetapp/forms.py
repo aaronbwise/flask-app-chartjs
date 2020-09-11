@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, FloatField, DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from budgetapp.models import User
 
@@ -53,3 +53,10 @@ class UpdateAccountForm(FlaskForm):
             result = User.query.filter_by(email=email.data).first()
             if result:
                 raise ValidationError('That email is already taken.')
+
+class DataEntryDummyForm(FlaskForm):
+    date = DateField('Date', format='%m/%d/%Y', validators=[
+        DataRequired()])
+    asset1 = FloatField('Capital_One_360', validators=[DataRequired()])
+    asset2 = FloatField('ForeignBank_Cash', validators=[DataRequired()])
+    submit = SubmitField('Post Data')

@@ -3,30 +3,18 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from budgetapp import app, db, bcrypt
-from budgetapp.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from budgetapp.models import User, Post
+from budgetapp.forms import RegistrationForm, LoginForm, UpdateAccountForm, DataEntryDummyForm
+from budgetapp.models import DataEntry, User, Post
 from flask_login import login_user, current_user, logout_user, login_required
-
-posts = [
-    {
-        'author': 'Aaron Wise',
-        'title': 'Post 1',
-        'content': 'First post content',
-        'date_posted': '09 September 2020'
-    },
-    {
-        'author': 'Lindsey Wise',
-        'title': 'Post 2',
-        'content': 'Second post content',
-        'date_posted': '10 September 2020'
-    }
-]
 
 
 @app.route("/")
+def index():
+    return render_template('index.html')
+
 @app.route("/home")
 def home():
-    return render_template('home.html', posts=posts)
+    return render_template('home.html')
 
 
 @app.route("/about")
@@ -37,7 +25,7 @@ def about():
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -67,7 +55,7 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('index'))
 
 # Function for generating/saving/returning picture (+resize) filename
 def save_picture(form_picture):
@@ -104,3 +92,21 @@ def account():
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account', image_file=image_file, form=form)
+
+@app.route("/data_entry", methods=['GET', 'POST'])
+@login_required
+def data_entry():
+    form = DataEntryDummyForm()
+    if form.validate_on_submit():
+        result = DataEntry(date=form.date.data, asset1=form.asset1.data, asset2=form.asset2.data)
+        db.session.add(result)
+        db.session.commit()
+        flash('Data has been recorded!', 'success')
+        return redirect(url_for('home'))
+    return render_template('data_entry.html', title='Data Entry', form=form)
+
+@app.route("/overview/<int:entry_id>")
+def overview(entry_id):
+    result = DataEntry.query.get_or_404(entry_id)
+
+    return render_template('overview.html', title='Overview')

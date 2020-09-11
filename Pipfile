@@ -18,6 +18,7 @@ passlib = "*"
 email-validator = "*"
 flask-bcrypt = "*"
 flask-login = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"

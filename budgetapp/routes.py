@@ -1,3 +1,6 @@
+import os
+import secrets
+from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from budgetapp import app, db, bcrypt
 from budgetapp.forms import RegistrationForm, LoginForm, UpdateAccountForm
@@ -66,11 +69,31 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+# Function for generating/saving/returning picture (+resize) filename
+def save_picture(form_picture):
+    # Generate filename
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename) # _ is unused variable name
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+
+    # Resize uploaded picture
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+
+    # Save
+    i.save(picture_path)
+    return picture_fn
+
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
         current_user.user = form.user.data
         current_user.email = form.email.data
         db.session.commit()

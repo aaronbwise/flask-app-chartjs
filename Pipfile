@@ -16,6 +16,7 @@ flask-wtf = "*"
 psycopg2 = "*"
 passlib = "*"
 email-validator = "*"
+bcrypt = "*"
 
 [requires]
 python_version = "3.8"

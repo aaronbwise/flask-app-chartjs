@@ -20,3 +20,5 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Create database instance
 db = SQLAlchemy(app)
+
+from budgetapp import routes

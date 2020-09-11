@@ -1,5 +1,5 @@
-from budgetapp import db
 from datetime import datetime
+from budgetapp import db
 
 
 class User(db.Model):

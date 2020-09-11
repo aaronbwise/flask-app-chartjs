@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect
 from budgetapp import app
-from budgetapp.forms import *
+from budgetapp.forms import RegistrationForm, LoginForm
 from budgetapp.models import User, Post
 
 posts = [

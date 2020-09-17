@@ -40,7 +40,7 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('about'))
     form = LoginForm()
     if form.validate_on_submit():
         result = User.query.filter_by(email=form.email.data).first()
@@ -102,11 +102,18 @@ def data_entry():
         db.session.add(result)
         db.session.commit()
         flash('Data has been recorded!', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('about'))
     return render_template('data_entry.html', title='Data Entry', form=form)
 
-@app.route("/overview/<int:entry_id>")
-def overview(entry_id):
-    result = DataEntry.query.get_or_404(entry_id)
+@app.route("/<int:id>/")
+def overview(id=None):
+    if id:
+        result = DataEntry.query.get(id)
 
-    return render_template('overview.html', title='Overview')
+        date = result.date
+        data1 = result.asset1
+        data2 = result.asset2
+
+        return render_template('overview.html', title='Overview', date=date, data1=data1, data2=data2)
+    else:
+        return 'Not working'

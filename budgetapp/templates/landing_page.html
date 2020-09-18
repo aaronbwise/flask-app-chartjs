@@ -6,7 +6,8 @@
         information</p>
     <p><small><strong>Built by Aaron Wise using the Python Flask framework</strong></small></p>
     <p><small>September 2020</small></p>
-    {% if session.logged_in == NULL %}
+    {% if current_user.is_authenticated %}
+    {% else %}
     <a href="/register" class="btn btn-primary btn-lg">Register</a>
     <a href="/login" class="btn btn-success btn-lg">Login</a>
     {% endif %}

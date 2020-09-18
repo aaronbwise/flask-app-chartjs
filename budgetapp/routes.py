@@ -1,7 +1,7 @@
 import os
 import secrets
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, send_from_directory
 from budgetapp import app, db, bcrypt
 from budgetapp.forms import RegistrationForm, LoginForm, UpdateAccountForm, DataEntryDummyForm
 from budgetapp.models import DataEntry, User, Post
@@ -9,18 +9,31 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 
 @app.route("/")
-def index():
-    return render_template('index.html')
+def landing_page():
+    return render_template('landing_page.html')
 
 @app.route("/home")
+@login_required
 def home():
-    return render_template('home.html')
+    if id:
+        pass
+        # result = DataEntry.query.all()
+
+        # date = result.date
+        # data1 = result.asset1
+        # data2 = result.asset2
+
+    return render_template('home.html', title='Home')
 
 
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                          'favicon.ico',mimetype='image/vnd.microsoft.icon')
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -28,8 +41,10 @@ def register():
         return redirect(url_for('login'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        result = User(user=form.user.data, email=form.email.data, password=hashed_password)
+        hashed_password = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
+        result = User(user=form.user.data, email=form.email.data,
+                      password=hashed_password)
         db.session.add(result)
         db.session.commit()
         flash(f'Your account has been created! You are now able to log in', 'success')
@@ -40,30 +55,33 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('about'))
+        return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        result = User.query.filter_by(email=form.email.data).first()
-        if result and bcrypt.check_password_hash(result.password, form.password.data):
-            login_user(result, remember=form.remember.data)
-            next_page = request.args.get('next') # takes to page before login
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
-            flash('Login unsuccessful: check email and password!', 'danger')
+            flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
+
 
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('landing_page'))
 
-# Function for generating/saving/returning picture (+resize) filename
-def save_picture(form_picture):
+
+def save_picture(form_picture):    # Function for generating/saving/returning picture (+resize) filename
     # Generate filename
     random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename) # _ is unused variable name
+    # _ is unused variable name
+    _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+    picture_path = os.path.join(
+        app.root_path, 'static/profile_pics', picture_fn)
 
     # Resize uploaded picture
     output_size = (125, 125)
@@ -73,6 +91,7 @@ def save_picture(form_picture):
     # Save
     i.save(picture_path)
     return picture_fn
+
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
@@ -90,30 +109,20 @@ def account():
     elif request.method == 'GET':
         form.user.data = current_user.user
         form.email.data = current_user.email
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    image_file = url_for(
+        'static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account', image_file=image_file, form=form)
+
 
 @app.route("/data_entry", methods=['GET', 'POST'])
 @login_required
 def data_entry():
     form = DataEntryDummyForm()
     if form.validate_on_submit():
-        result = DataEntry(date=form.date.data, asset1=form.asset1.data, asset2=form.asset2.data)
+        result = DataEntry(date=form.date.data,
+                           asset1=form.asset1.data, asset2=form.asset2.data)
         db.session.add(result)
         db.session.commit()
         flash('Data has been recorded!', 'success')
         return redirect(url_for('about'))
     return render_template('data_entry.html', title='Data Entry', form=form)
-
-@app.route("/<int:id>/")
-def overview(id=None):
-    if id:
-        result = DataEntry.query.get(id)
-
-        date = result.date
-        data1 = result.asset1
-        data2 = result.asset2
-
-        return render_template('overview.html', title='Overview', date=date, data1=data1, data2=data2)
-    else:
-        return 'Not working'

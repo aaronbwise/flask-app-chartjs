@@ -6,6 +6,7 @@ from budgetapp import app, db, bcrypt
 from budgetapp.forms import RegistrationForm, LoginForm, UpdateAccountForm, DataEntryForm
 from budgetapp.models import DataEntry, User, Post
 from flask_login import login_user, current_user, logout_user, login_required
+import pandas as pd
 
 
 @app.route("/")
@@ -18,7 +19,7 @@ def home():
     return render_template('home.html', title='Home')
 
 @app.route("/simple_chart")
-def chart():
+def chart_test():
     results = DataEntry.query.all()
     if results:
         labels = []
@@ -29,7 +30,28 @@ def chart():
         legend = 'Budget Data'
     else:
         flash('Could not access database!', 'danger')
-    return render_template('chart.html', values=values, labels=labels, legend=legend)
+    return render_template('chart_test.html', values=values, labels=labels, legend=legend)
+
+
+def read_data():    # Function for getting data
+    # Read in csv
+    filepath = os.path.join(app.root_path, 'static/profile_pics', 'data.csv')
+    df = pd.read_csv(filepath, encoding='utf-8')
+
+    return df
+
+@app.route("/chart")
+def chart():
+    df = read_data()
+    
+    labels = df['Date'].to_list()
+    values_1 = df['Liabilities'].to_list()
+    values_2 = df['Assets'].to_list()
+    values_3 = df['Net Worth'].to_list()
+
+    legend = 'Budget Data'
+
+    return render_template('chart.html', values=values_1, labels=labels, legend=legend)
 
 
 @app.route("/about")

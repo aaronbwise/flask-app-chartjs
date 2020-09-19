@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>MyChart</title>
 </head>
+
 <body>
     <div class="container">
         <canvas id="myChart"></canvas>
@@ -21,25 +23,33 @@
 
         var myChart = new Chart(ctx, {
             type: 'horizontalBar', // hor bar, pie, line, etc.
-            
+
             data: {
-                labels: [
-                {% for item in labels %}
+                labels: [{
+                        %
+                        for item in labels %
+                    }
                     '{{ item }}',
-                {% endfor %}
+                    {
+                        % endfor %
+                    }
                 ],
-                
+
                 datasets: [{
                     label: '{{ legend }}',
-                    data: [
-                    {% for item in values %}
+                    data: [{
+                            %
+                            for item in values %
+                        }
                         '{{ item }}',
-                    {% endfor %}
+                        {
+                            % endfor %
+                        }
                     ],
                     backgroundColor: [
                         'green'
                     ],
-                    spanGaps:true,
+                    spanGaps: true,
                     borderWidth: 1,
                     borderColor: '#777',
                     hoverBorderWidth: 3,
@@ -47,30 +57,31 @@
                 }]
             },
             options: {
-                title:{
-                    display:false,
+                title: {
+                    display: false,
                     text: 'Largest Cities in Massachusetts'
                 },
-                legend:{
-                    display:true,
-                    position:'right',
-                    labels:{
-                        fontColor:'#000'
+                legend: {
+                    display: true,
+                    position: 'right',
+                    labels: {
+                        fontColor: '#000'
                     }
                 },
-                layout:{
-                    padding:{
-                        left:25,
-                        right:25,
-                        top:25,
-                        bottom:25
+                layout: {
+                    padding: {
+                        left: 25,
+                        right: 25,
+                        top: 25,
+                        bottom: 25
                     }
                 },
-                tooltips:{
-                    enabled:true
+                tooltips: {
+                    enabled: true
                 }
             }
         })
     </script>
 </body>
+
 </html>

@@ -22,50 +22,59 @@
         Chart.defaults.global.defaultFontColor = '#777';
 
         var myChart = new Chart(ctx, {
-            type: 'line', // hor bar, pie, line, etc.
+                    type: 'line', // hor bar, pie, line, etc.
 
-            data: {
-                labels: [
-                    {% for item in labels %}
-                    '{{ item }}',
-                    {% endfor %}
-                ],
+                    data: {
+                        labels: [
+                            {% for item in labels %}
+                            '{{ item }}',
+                            {% endfor %}
+                        ],
 
-                datasets: [{
-                    label: '{{ legend }}',
-                    data: [
-                        {% for item in values %}
-                        '{{ item }}',
-                        {% endfor %}
-                    ],
-                    backgroundColor:'green'
-                }]
-            },
-            options: {
-                title: {
-                    display: false,
-                    text: 'Largest Cities in Massachusetts'
-                },
-                legend: {
-                    display: true,
-                    position: 'right',
-                    labels: {
-                        fontColor: '#000'
-                    }
-                },
-                layout: {
-                    padding: {
-                        left: 25,
-                        right: 25,
-                        top: 25,
-                        bottom: 25
-                    }
-                },
-                tooltips: {
-                    enabled: true
-                }
-            }
-        })
+                        datasets: [{
+                                label: '{{ legend_1 }}',
+                                data: [
+                                    {% for item in values_1 %}
+                                    '{{ item }}',
+                                    {% endfor %}
+                                ],
+                                backgroundColor: 'red'
+                            },
+                            {
+                                label: '{{ legend_2 }}',
+                                data: [
+                                    {% for item in values_2 %}
+                                    '{{ item }}',
+                                    {% endfor %}
+                                ],
+                                backgroundColor: 'green'
+                            }
+                        ]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Net Worth Tracking'
+                        },
+                        legend: {
+                            display: true,
+                            position: 'right',
+                            labels: {
+                                fontColor: '#000'
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                left: 25,
+                                right: 25,
+                                top: 25,
+                                bottom: 25
+                            }
+                        },
+                        tooltips: {
+                            enabled: true
+                        }
+                    })
     </script>
 </body>
 

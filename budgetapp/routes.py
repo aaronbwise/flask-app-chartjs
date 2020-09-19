@@ -18,24 +18,9 @@ def landing_page():
 def home():
     return render_template('home.html', title='Home')
 
-@app.route("/simple_chart")
-def chart_test():
-    results = DataEntry.query.all()
-    if results:
-        labels = []
-        values = []
-        for result in results:
-            labels.append(result.date)
-            values.append(result.asset1)
-        legend = 'Budget Data'
-    else:
-        flash('Could not access database!', 'danger')
-    return render_template('chart_test.html', values=values, labels=labels, legend=legend)
-
-
-def read_data():    # Function for getting data
+def read_data():    # Function for getting chart data
     # Read in csv
-    filepath = os.path.join(app.root_path, 'static/profile_pics', 'data.csv')
+    filepath = os.path.join(app.root_path, 'static/data', 'data.csv')
     df = pd.read_csv(filepath, encoding='utf-8')
 
     return df
@@ -49,9 +34,11 @@ def chart():
     values_2 = df['Assets'].to_list()
     values_3 = df['Net Worth'].to_list()
 
-    legend = 'Budget Data'
+    legend_1 = 'Liabilities'
+    legend_2 = 'Assets'
 
-    return render_template('chart.html', values=values_1, labels=labels, legend=legend)
+    return render_template('chart.html', values_1=values_1, values_2=values_2, labels=labels,
+    legend_1=legend_1, legend_2=legend_2)
 
 
 @app.route("/about")

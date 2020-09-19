@@ -31,10 +31,11 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
-        {% block content%}{% endblock%}
+        {% block content %}{% endblock%}
     </div>
-
+    {% block scripts %}
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% endblock scripts %}
 </body>
 
 </html>

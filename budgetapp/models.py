@@ -41,4 +41,4 @@ class DataEntry(db.Model):
     asset2 = db.Column(db.Float(precision=2), nullable=False)
 
     def __repr__(self):
-        return f"DatEntry('{self.id}', '{self.date}')"
+        return f"<id={self.id}, date={self.date}, asset1={self.asset1}, asset2={self.asset2}>"

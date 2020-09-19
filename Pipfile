@@ -19,6 +19,7 @@ email-validator = "*"
 flask-bcrypt = "*"
 flask-login = "*"
 pillow = "*"
+"pychart.js" = "*"
 
 [requires]
 python_version = "3.8"

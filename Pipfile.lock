@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "79ebc2a311d29810e4174c238c32ca1fb96f1b4389ef87d3af3528893322f7ad"
+            "sha256": "dfaf153246de91c6c446ff80a22f8010963835d25883b0619baaa7abae5dc00d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -317,6 +317,14 @@
             ],
             "index": "pypi",
             "version": "==2.8.6"
+        },
+        "pychart.js": {
+            "hashes": [
+                "sha256:5d9c135ccabceb86a556520401dd0660a1137da64e23a38d6703c3de0f96dd05",
+                "sha256:dc425aea72c4ab276799acf0837f7b45290147984ece1ede8bede6f1d46308ee"
+            ],
+            "index": "pypi",
+            "version": "==0.3.0"
         },
         "pycparser": {
             "hashes": [

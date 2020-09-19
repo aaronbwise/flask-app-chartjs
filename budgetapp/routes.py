@@ -3,7 +3,7 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, send_from_directory
 from budgetapp import app, db, bcrypt
-from budgetapp.forms import RegistrationForm, LoginForm, UpdateAccountForm, DataEntryDummyForm
+from budgetapp.forms import RegistrationForm, LoginForm, UpdateAccountForm, DataEntryForm
 from budgetapp.models import DataEntry, User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -15,15 +15,21 @@ def landing_page():
 @app.route("/home")
 @login_required
 def home():
-    if id:
-        pass
-        # result = DataEntry.query.all()
-
-        # date = result.date
-        # data1 = result.asset1
-        # data2 = result.asset2
-
     return render_template('home.html', title='Home')
+
+@app.route("/simple_chart")
+def chart():
+    results = DataEntry.query.all()
+    if results:
+        labels = []
+        values = []
+        for result in results:
+            labels.append(result.date)
+            values.append(result.asset1)
+        legend = 'Budget Data'
+    else:
+        flash('Could not access database!', 'danger')
+    return render_template('chart.html', values=values, labels=labels, legend=legend)
 
 
 @app.route("/about")
@@ -117,12 +123,12 @@ def account():
 @app.route("/data_entry", methods=['GET', 'POST'])
 @login_required
 def data_entry():
-    form = DataEntryDummyForm()
+    form = DataEntryForm()
     if form.validate_on_submit():
         result = DataEntry(date=form.date.data,
                            asset1=form.asset1.data, asset2=form.asset2.data)
         db.session.add(result)
         db.session.commit()
         flash('Data has been recorded!', 'success')
-        return redirect(url_for('about'))
+        return redirect(url_for('home'))
     return render_template('data_entry.html', title='Data Entry', form=form)

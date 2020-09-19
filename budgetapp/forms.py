@@ -54,7 +54,7 @@ class UpdateAccountForm(FlaskForm):
             if result:
                 raise ValidationError('That email is already taken.')
 
-class DataEntryDummyForm(FlaskForm):
+class DataEntryForm(FlaskForm):
     date = DateField('Date', format='%m/%d/%Y', validators=[
         DataRequired()])
     asset1 = FloatField('Capital_One_360', validators=[DataRequired()])

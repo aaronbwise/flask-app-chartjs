@@ -26,6 +26,7 @@ def read_data():    # Function for getting chart data
     return df
 
 @app.route("/chart")
+@login_required
 def chart():
     df = read_data()
     

@@ -1,12 +1,11 @@
-## Welcome to GitHub Pages
+## Flask App: Tracking monthly budget data
 
-You can use the [editor on GitHub](https://github.com/aaronbwise/flask-app-chartjs/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+This is a personal project I used for learning a number of useful technologies, including Postgres, SQLAlchemy, Flask, and ChartJs. It also includes some customization of the Bootstrap starter template.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Currently the data is pulled from a '.csv' file in the static folder. Dummy data can be entered into the backend database. I still have some work to migrate/copy the final database structure and content and connect the visualizations from that source. There is also some work to be done to clean up/minimize the ChartJs code.
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+
 
 ```markdown
 Syntax highlighted code block

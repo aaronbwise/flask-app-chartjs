@@ -18,6 +18,20 @@ This Flask-based application is designed for the entry, storage, and visualizati
 - **SQLAlchemy:** SQL toolkit and Object-Relational Mapping (ORM) for Python.
 - **Pillow:** Python Imaging Library for adding image processing capabilities.
 
+## Code Structure
+
+- `run.py`: The entry point of the application. Starts the Flask server.
+- `forms.py`: Contains the form classes for user input (registration, login, data entry).
+- `models.py`: Defines the database models for SQLAlchemy ORM.
+- `routes.py`: Includes all the route definitions for the application.
+- `templates/`: This directory contains HTML templates for rendering views.
+    - `about.html`: About page of the application.
+    - `home.html`: Home page template.
+    - `landing_page.html`: The landing page of the app.
+    - `login.html`: User login page.
+    - `register.html`: User registration page.
+- `static/`: Contains static files like CSS, JS, and images.
+
 ## Getting Started
 
 ### Prerequisites

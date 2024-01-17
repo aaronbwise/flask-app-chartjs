@@ -1,4 +1,4 @@
-# Flask Budget Applicatio
+# Flask Budget Application
 
 - **Live Website:** [Budget App](https://www.a3di.dev/)
 

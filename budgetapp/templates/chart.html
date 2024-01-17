@@ -14,28 +14,35 @@
 
 {% block scripts %}
 <script>
-
     // Global Options
     Chart.defaults.global.defaultFontSize = 10;
     Chart.defaults.global.defaultFontColor = '#777';
     Chart.defaults.global.elements.point.radius = 0;
 
     var ctx1 = document.getElementById('chart-1').getContext('2d');
-    
+
     var chart1 = new Chart(ctx1, {
         type: 'line',
         data: {
-            labels: [
-                {% for item in labels %}
+            labels: [{
+                    %
+                    for item in labels %
+                }
                 '{{ item }}',
-                {% endfor %}
+                {
+                    % endfor %
+                }
             ],
             datasets: [{
                     label: '{{legend_1}}',
-                    data: [
-                        {% for item in values_1 %}
+                    data: [{
+                            %
+                            for item in values_1 %
+                        }
                         '{{ item }}',
-                        {% endfor %}
+                        {
+                            % endfor %
+                        }
                     ],
                     backgroundColor: '#FC6C85',
                     borderWidth: 1,
@@ -45,10 +52,14 @@
                 },
                 {
                     label: '{{legend_2}}',
-                    data: [
-                        {% for item in values_2 %}
+                    data: [{
+                            %
+                            for item in values_2 %
+                        }
                         '{{ item }}',
-                        {% endfor %}
+                        {
+                            % endfor %
+                        }
                     ],
                     backgroundColor: '#90EF90',
                     borderWidth: 1,
@@ -85,21 +96,29 @@
     })
 
     var ctx2 = document.getElementById('chart-2').getContext('2d');
-    
+
     var chart2 = new Chart(ctx2, {
         type: 'line',
         data: {
-            labels: [
-                {% for item in labels %}
+            labels: [{
+                    %
+                    for item in labels %
+                }
                 '{{ item }}',
-                {% endfor %}
+                {
+                    % endfor %
+                }
             ],
             datasets: [{
                     label: '{{legend_1}}',
-                    data: [
-                        {% for item in values_1 %}
+                    data: [{
+                            %
+                            for item in values_1 %
+                        }
                         '{{ item }}',
-                        {% endfor %}
+                        {
+                            % endfor %
+                        }
                     ],
                     backgroundColor: '#FC6C85',
                     borderWidth: 1,
@@ -109,10 +128,14 @@
                 },
                 {
                     label: '{{legend_2}}',
-                    data: [
-                        {% for item in values_2 %}
+                    data: [{
+                            %
+                            for item in values_2 %
+                        }
                         '{{ item }}',
-                        {% endfor %}
+                        {
+                            % endfor %
+                        }
                     ],
                     backgroundColor: '#90EF90',
                     borderWidth: 1,

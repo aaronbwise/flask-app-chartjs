@@ -1,7 +1,13 @@
-# Flask Application with ChartJs
+# Flask Budget Application
 
-Flask application with Postgres backend database and ChartJs to track monthly income/expenses and visualize.
+- **Live Website:** [Budget App](https://www.a3di.dev/){:target="_blank"}
 
-## Local Development
+This Flask application provides a simple yet effective way to manage personal finances by tracking assets. It includes user authentication, profile management, and data entry features.
 
-1. Open index.html in your browser.
+## Features
+
+- **User Authentication**: Securely register, login, and logout.
+- **Profile Management**: Update user profile and change the profile picture.
+- **Data Entry**: Record and track personal financial data.
+
+

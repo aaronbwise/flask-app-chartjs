@@ -1,3 +1,5 @@
 .vscode
+venv/
 __pycache__
 /budgetapp/static/data/*.csv
+desktop.ini

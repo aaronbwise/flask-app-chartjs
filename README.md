@@ -1,6 +1,6 @@
 # Flask Budget Applicatio
 
-- **Live Website:** [Budget App](https://www.a3di.dev/){:target="_blank"}
+- **Live Website:** [Budget App](https://www.a3di.dev/)
 
 This Flask application provides a simple yet effective way to manage personal finances by tracking assets. It includes user authentication, profile management, and data entry features.
 

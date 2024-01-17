@@ -10,4 +10,4 @@ This Flask application provides a simple yet effective way to manage personal fi
 - **Profile Management**: Update user profile and change the profile picture.
 - **Data Entry**: Record and track personal financial data.
 
-
+![alt text](https://github.com/aaronbwise/)
